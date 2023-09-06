@@ -1,1 +1,29 @@
-/*# sourceMappingURL=singleProduct.css.map */
+.back {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: none;
+}
+
+.bigPic {
+  max-height: 500px;
+}
+
+.bottomImages {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.imgsDiv {
+  overflow: auto;
+}
+.imgsDiv::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #c3c3c3;
+  width: calc(100vh - 600px);
+}
+.imgsDiv::-webkit-scrollbar-track {
+  background: rgba(77, 77, 77, 0.6745098039);
+}
+.imgsDiv::-webkit-scrollbar {
+  width: 2px;
+}/*# sourceMappingURL=singleProduct.css.map */

@@ -301,15 +301,6 @@ body::-webkit-scrollbar-track {
   right: 20px;
 }
 
-.close2 {
-  color: white;
-  font-size: 32px;
-  font-weight: bold;
-  position: absolute;
-  right: 20px;
-  cursor: pointer;
-}
-
 .close:hover,
 .close:focus {
   color: #000;

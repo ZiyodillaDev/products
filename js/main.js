@@ -179,3 +179,69 @@ prev.addEventListener("click", () => {
     prev.disabled = true;
   }
 });
+
+// login
+
+
+
+const form = document.querySelector(".loginForm");
+const username = document.querySelector("#username");
+const password = document.querySelector("#password");
+
+form.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  fetch("https://dummyjson.com/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value,
+      // username: "kminchelle",
+      // password: "0lelplR",
+    }),
+  })
+    .then((res) => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.token && data.message != "Invalid credentials"){
+        Toastify({
+          text: "Successfully logged in",
+          duration: 3000,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "green",
+          },
+        }).showToast();
+
+        localStorage.setItem("token", data.token);
+        location.replace("admin.html")
+      }else if(data.message == "Invalid credentials"){
+        Toastify({
+          text: "Invalid credentials",
+          duration: 3000,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "orange",
+          },
+        }).showToast();
+      }else{
+        Toastify({
+          text: data.message,
+          duration: 3000,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "red",
+          },
+        }).showToast();
+      }
+    });
+});

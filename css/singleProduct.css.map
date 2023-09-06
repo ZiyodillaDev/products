@@ -1,1 +1,1 @@
-{"version":3,"sources":[],"names":[],"mappings":"","file":"singleProduct.css"}
+{"version":3,"sources":["../scss/singleProduct.scss","singleProduct.css"],"names":[],"mappings":"AAAA;EACE,kBAAA;EACA,oBAAA;EACA,YAAA;ACCF;;ADEA;EACE,iBAAA;ACCF;;ADCA;EACE,iBAAA;EACA,gBAAA;ACEF;;ADCA;EACE,cAAA;ACEF;ADDE;EACE,kBAAA;EACA,mBAAA;EACA,0BAAA;ACGJ;ADAE;EACE,0CAAA;ACEJ;ADCE;EACE,UAAA;ACCJ","file":"singleProduct.css"}

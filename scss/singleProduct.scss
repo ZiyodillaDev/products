@@ -1,3 +1,32 @@
-// *{
+.back {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: none;
+}
 
-// }
+.bigPic {
+  max-height: 500px;
+}
+.bottomImages {
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.imgsDiv {
+  overflow: auto;
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: #c3c3c3;
+    width: calc(100vh - 600px);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #4d4d4dac;
+  }
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+}
+
+
