@@ -1,51 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
-    " />
-  <link rel="stylesheet" href="./css/admin.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
+    "
+    />
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+  </head>
 
-<body>
+  <body>
     <header id="navbar">
-        <div class="container">
-            <nav class="navbar">
-                <div class="brand-title fw-bold fs-1">Products</div>
-                <button class="addProduct btn btn-primary">
-                    Add Product
-                </button>
-            </nav>
-        </div>
+      <div class="container">
+        <nav class="navbar">
+          <a href="index.html" class="brand-title fw-bold fs-1 text-dark">Products</a>
+          <button class="addProduct btn btn-primary" id="myBtn">Add Product</button>
+          <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 class="text-center">Create Product</h2>
+              </div>
+              <form class="modal-body productCreateForm">
+                <label for="title" class="text-dark labels ">Title</label>
+                <input type="text" id="title" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Title">
+                <label for="description" class="text-dark labels ">Description</label>
+                <input type="text" id="description" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Description">
+                <label for="price" class="text-dark labels ">Price</label>
+                <input type="number" id="price" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Price">
+                <label for="discount" class="text-dark labels ">Discount Percentage</label>
+                <input type="number" id="discount" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Discount Percentage">
+                <label for="stock" class="text-dark labels ">Stock</label>
+                <input type="number" id="stock" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Stock">
+                <label for="brand" class="text-dark labels ">Brand</label>
+                <input type="text" id="brand" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Brand">
+                <button type="submit" class="btnSubmit">Submit</button>
+              </form>
+            </div>
+
+          </div>
+        </nav>
+      </div>
     </header>
 
     <div class="container">
-        <div class="cards"></div>
-      </div>
-    
-      <template>
-        <div class="card" style="width: 18rem">
-          <img src="..." class="card-img-top" alt="..." />
+      <div class="cards"></div>
+    </div>
 
-          <div class="card-body">
-            <h5 class="card-title"></h5>
-            <p class="card-text"></p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item popular"></li>
-            <li class="list-group-item capital"></li>
-            <li class="list-group-item region"></li>
-          </ul>
+    <template>
+      <div class="card" style="width: 18rem">
+        <img src="..." class="card-img-top" alt="..." />
+
+        <div class="card-body">
+          <h5 class="card-title"></h5>
+          <p class="card-text"></p>
         </div>
-      </template>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item popular"></li>
+          <li class="list-group-item capital"></li>
+          <li class="list-group-item region"></li>
+        </ul>
+        <div class="d-flex justify-content-center gap-3 pt-3 pb-2">
+          <button class="btn btn-warning p-2 edit" id="" >
+            <img src="images/edit.svg" alt="edit" />
+          </button>
+          <div id="myModal2" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span class="close2">&times;</span>
+                <h2 class="text-center">Edit Product</h2>
+              </div>
+              <form class="modal-body productEditForm">
+                <label for="title" class="text-dark labels ">Title</label>
+                <input type="text" id="title2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Title">
+                <label for="description" class="text-dark labels ">Description</label>
+                <input type="text" id="description2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Description">
+                <label for="price" class="text-dark labels ">Price</label>
+                <input type="number" id="price2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Price">
+                <label for="discount" class="text-dark labels ">Discount Percentage</label>
+                <input type="number" id="discount2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Discount Percentage">
+                <label for="stock" class="text-dark labels ">Stock</label>
+                <input type="number" id="stock2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Stock">
+                <label for="brand" class="text-dark labels ">Brand</label>
+                <input type="text" id="brand2" autocomplete="off" class="input-group inputs "
+                  placeholder="Product's Brand">
+                <button type="submit" class="btnSubmit2">Submit</button>
+              </form>
+            </div>
+
+          </div>
+          <button class="btn btn-danger p-2 delete" id="">
+            <img src="images/delete.svg" alt="delete" />
+          </button>
+        </div>
+      </div>
+    </template>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
 
     <script src="./js/admin.js"></script>
-</body>
-
+  </body>
 </html>

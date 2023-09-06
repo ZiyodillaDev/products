@@ -370,4 +370,8 @@ body::-webkit-scrollbar-track {
   padding: 10px 20px;
   border-radius: 100px;
   border: none;
+}
+
+.brand-title {
+  text-decoration: none;
 }/*# sourceMappingURL=main.css.map */
