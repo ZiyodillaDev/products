@@ -1,125 +1,181 @@
-// Navbar Shrink
-window.onscroll = function () {
-    scrollFunction();
-  };
-  
-  function scrollFunction() {
-    if (document.documentElement.scrollTop > 150) {
-      document.getElementById("navbar").classList.add("navbar-shrink");
-    } else {
-      document.getElementById("navbar").classList.remove("navbar-shrink");
-    }
-  }
-
-  
-// Backtop
-const toTop = document.querySelector(".to-top");
-
-window.addEventListener("scroll", () => {
-  if (window.pageYOffset > 300) {
-    toTop.classList.add("active");
-  } else {
-    toTop.classList.remove("active");
-  }
-})
-
-
 // Main codes
 
-const elCards= document.querySelector(`.cards`)
-elCards.setAttribute("class","row gap-3 justify-content-between pt-5 center")
-const elInput= document.querySelector(`.js-input`)
-const elSelect = document.querySelector('#js-select')
-const elTemplate = document.querySelector(`template`).content
+const elCards = document.querySelector(`.cards`);
+elCards.setAttribute("class", "row gap-3 justify-content-between pt-5 center");
+const elInput = document.querySelector(`.js-input`);
+const elSelect = document.querySelector("#js-select");
+const elTemplate = document.querySelector(`template`).content;
 let docFragment = document.createDocumentFragment();
+let limit = 20;
+let skip = 0;
 
-let region;
-async function countries(){
-    const response =await fetch(`https://restcountries.com/v3.1/all`)
-    const data = await response.json()
-    renderPosts(data,elCards) 
-   
-    const newRegion = new Set(data.map((el)=>el.region))
-    
-    for( i of newRegion){
-const elOption =document.createElement('option')
-elOption.textContent =i
-elSelect.appendChild(elOption)
+function renderPosts(array, node) {
+  node.innerHTML = "";
+  array.forEach((el) => {
+    let elCard = elTemplate.cloneNode(true);
+    let elImg = elCard.querySelector(`.card-img-top`);
+    let elTitle = elCard.querySelector(".card-title");
+    let elPopular = elCard.querySelector(`.popular`);
+    let elCapital = elCard.querySelector(".capital");
+    let elRegion = elCard.querySelector(`.region`);
+    let elLink = elCard.querySelector(`.linkProduct`);
 
-}
-elSelect.addEventListener('change', (evt)=>{
-region = elSelect.value
-async function FilterRegion(){
-    const res = await fetch(`https://restcountries.com/v3.1/region/${region}`)
-    const data = await res.json()
-    renderPosts(data,elCards)
-}
-FilterRegion()
-})
+    elImg.src = el.thumbnail;
+    elTitle.textContent = el.title;
+    elPopular.textContent = "Price:  " + el.price + "$";
+    elCapital.textContent = "Rating:  " + el.rating;
+    elRegion.textContent = "Brand:  " + el.brand;
+    elLink.id = el.id;
 
-}
-countries()
+    elLink.addEventListener("click", () => {
+      localStorage.setItem("id", elLink.id);
+    });
 
-function renderPosts(array,node){
+    docFragment.appendChild(elCard);
+  });
+  node.appendChild(docFragment);
 
-    node.innerHTML = ""
-    array.forEach(el => {
-        let elCard =elTemplate.cloneNode(true)
-        let elImg = elCard.querySelector(`.card-img-top`)
-        let elTitle =elCard.querySelector(".card-title")
-        let elPopular =elCard.querySelector(`.popular`)
-        let elCapital =elCard.querySelector(".capital")
-        let elRegion =elCard.querySelector(`.region`)
+  let likedBtns = document.querySelectorAll(".like");
 
-        elImg.src = el.flags.svg
-        elTitle.textContent = el.name.common
-        elPopular.textContent ='Population:  ' + el.population
-        elCapital.textContent ='Capital:  ' + el.capital
-        elRegion.textContent ='Region:  ' + el.region 
-
-        docFragment.appendChild(elCard)
-});
-node.appendChild(docFragment)
-
+  likedBtns.forEach((item) => {
+    item.addEventListener("click", () => {
+      item.classList.toggle("liked");
+      if (item.classList.contains("liked")) {
+        item.src = "images/liked-done.svg";
+      } else {
+        item.src = "images/liked.svg";
+      }
+    });
+  });
 }
 
-let nameCountry ;
-
-elInput.addEventListener('input',()=>{
- if (elInput.value !== "") {
-    nameCountry = elInput.value
-    SearchFunc()
- }
-})
-
-const SearchFunc = async () =>{
-    const res =await fetch(`https://restcountries.com/v3.1/name/${nameCountry}`)
-    const data = await res.json()
-    renderPosts(data,elCards)
-
+let category;
+async function productsGet() {
+  const response = await fetch(
+    `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
+  );
+  const data = await response.json();
+  localStorage.setItem("all", data.total);
+  renderPosts(data.products, elCards);
 }
+productsGet();
+async function productsSort() {
+  const response = await fetch(`https://dummyjson.com/products/categories`);
+  const data = await response.json();
 
-const elMode =document.querySelector('.js-mode')
-const header =document.querySelector('header')
-const logo =document.querySelector('.brand-title')
-let theme =false
-elMode.addEventListener('click', ()=>{
-    theme =!theme
-    const bg =theme ? 'dark':'light';
-    window.localStorage.setItem('theme',bg)
-    ChangeTheme()
-})
-function ChangeTheme() {
-    if (window.localStorage.getItem("theme" ) == "dark") {
-        document.body.classList.add('dark')
-        elMode.classList.add('btn')
-        header.classList.add('dark')
-        logo.classList.add('dark-text')
-    }else{
-        document.body.classList.remove('dark')
-        elMode.classList.remove('btn')
-        header.classList.remove('dark')
-        logo.classList.remove('dark-text')
+  for (i of data) {
+    const elOption = document.createElement("option");
+    elOption.textContent = i;
+    elSelect.appendChild(elOption);
+  }
+  elSelect.addEventListener("change", (evt) => {
+    category = elSelect.value;
+    async function FilterRegion() {
+      if (category == "all") {
+        const response = await fetch(
+          `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
+        );
+        const data = await response.json();
+        renderPosts(data.products, elCards);
+      } else {
+        const res = await fetch(
+          `https://dummyjson.com/products/category/${category}`
+        );
+        const data = await res.json();
+        renderPosts(data.products, elCards);
+      }
     }
+    FilterRegion();
+  });
 }
-ChangeTheme()
+productsSort();
+
+let nameCountry;
+
+elInput.addEventListener("input", () => {
+  if (elInput.value !== "") {
+    nameCountry = elInput.value;
+    SearchFunc();
+  }
+});
+
+const SearchFunc = async () => {
+  const res = await fetch(
+    `https://dummyjson.com/products/search?q=${nameCountry}`
+  );
+  const data = await res.json();
+  renderPosts(data.products, elCards);
+};
+
+const elMode = document.querySelector(".js-mode");
+const header = document.querySelector("header");
+const logo = document.querySelector(".brand-title");
+let theme = "dark";
+elMode.addEventListener("click", () => {
+  theme = !theme;
+  const bg = theme ? "dark" : "light";
+  window.localStorage.setItem("theme", bg);
+  ChangeTheme();
+});
+function ChangeTheme() {
+  if (window.localStorage.getItem("theme") == "dark") {
+    document.body.classList.add("dark");
+    elMode.classList.add("btn");
+    header.classList.add("dark");
+    logo.classList.add("dark-text");
+  } else {
+    document.body.classList.remove("dark");
+    elMode.classList.remove("btn");
+    header.classList.remove("dark");
+    logo.classList.remove("dark-text");
+  }
+}
+ChangeTheme();
+
+var modal = document.getElementById("myModal");
+
+var btn = document.getElementById("myBtn");
+
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function () {
+  modal.style.display = "block";
+};
+
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+let prev = document.querySelector(".prev");
+let next = document.querySelector(".next");
+let all = localStorage.getItem("all");
+
+if (skip == 0) {
+  prev.disabled = true;
+} else if (skip <= all) {
+  next.disabled = true;
+}
+
+next.addEventListener("click", () => {
+  skip += limit;
+  prev.disabled = false;
+  productsGet();
+  if (skip >= all) {
+    next.disabled = true;
+  }
+});
+
+prev.addEventListener("click", () => {
+  skip -= limit;
+  next.disabled = false;
+  productsGet();
+  if (skip == 0) {
+    prev.disabled = true;
+  }
+});
